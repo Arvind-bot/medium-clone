@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client/edge'
 import { sign } from "hono/jwt";
 import { hashPassword, verifyPassword } from "../utils/helperFunctions";
 import { setPrismaToContext } from "../middlewares";
+import { signinInput, signupInput } from "@arvind-debug/medium-common";
 
 type Environment = {
   Bindings: {
@@ -21,6 +22,11 @@ userRouter.use('/*', setPrismaToContext);
 userRouter.post('/signup', async (c) => {
 	try {
     const body = await c.req.json();
+    const { success, error: zError }= signupInput.safeParse(body);
+    if(!success) {
+      c.status(411);
+      return c.json({ message: 'Invalid inputs', error: zError });
+    }
     const { email, password, name } = body || {};
     if (!email || !password) {
       c.status(400)
@@ -63,6 +69,11 @@ userRouter.post('/signup', async (c) => {
 userRouter.post('/signin', async (c) => {
   try {
     const body = await c.req.json();
+    const {success, error: zError } = signinInput.safeParse(body);
+    if(!success) {
+      c.status(411);
+      return c.json({ message: 'Invalid inputs', error: zError });
+    }
     const { email, password } = body || {};
     if (!email || !password) {
       c.status(400)

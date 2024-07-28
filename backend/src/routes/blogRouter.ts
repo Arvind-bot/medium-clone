@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { authenticateUser, setPrismaToContext } from "../middlewares";
+import { createBlogInput, updateBlogInput } from "@arvind-debug/medium-common";
 
 type Environment = {
   Bindings: {
@@ -20,6 +21,11 @@ blogRouter.post("/", async (c) => {
   try {
     const contentType = c.req.header('Content-Type');
     const body = await c.req.json();
+    const {success, error: zError } = createBlogInput.safeParse(body);
+    if(!success) {
+      c.status(411);
+      return c.json({ message: 'Invalid inputs', error: zError });
+    }
     const { title, content, published } = body || {};
     const prisma = c.get("prisma");
     const userId = c.get("userId");
@@ -27,7 +33,6 @@ blogRouter.post("/", async (c) => {
       c.status(400);
       return c.json({ message: "Missing required fields: title and content" });
     }
-    console.log(prisma)
     const blog = await prisma.post.create({
       data: {
         title,
@@ -49,6 +54,11 @@ blogRouter.put("/:id", async (c) => {
   try {
     const id = c.req.param('id');
     const body = await c.req.json();
+    const {success, error: zError } = updateBlogInput.safeParse(body);
+    if(!success) {
+      c.status(411);
+      return c.json({ message: 'Invalid inputs', error: zError });
+    }
     const { title, content, published } = body || {};
     const prisma = c.get("prisma");
     const userId = c.get("userId");

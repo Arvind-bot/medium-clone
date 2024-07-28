@@ -1,38 +1,31 @@
 import { Hono } from 'hono'
-import { PrismaClient } from '@prisma/client/edge'
+import { PrismaClient, Prisma } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
+import { sign, verify } from "hono/jwt";
+import { userRouter } from './routes/userRouter';
+import { blogRouter } from './routes/blogRouter';
 
-const app = new Hono<{
+type Environment = {
   Bindings: {
-    DATABASE_URL: string
+    DATABASE_URL: string,
+    JWT_SECRET: string,
+  },
+  Variables: {
+    userId: string,
+    prisma: any
   }
-}>();
+}
 
-app.post('/api/v1/user/signup', (c) => {
+const app = new Hono<Environment>();
+
+app.use('*', async (c, next) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
-	return c.text('signup route')
+  c.set('prisma', prisma);
+  await next();
 })
 
-app.post('/api/v1/user/signin', (c) => {
-	return c.text('signin route')
-})
-
-app.post('/api/v1/blod', (c) => {
-	return c.text('post blog route')
-})
-
-app.put('/api/v1/blod', (c) => {
-	return c.text('edit blog route')
-})
-
-app.get('/api/v1/blog/:id', (c) => {
-	return c.text('get specific blog route')
-})
-
-app.get('/api/v1/blog/bulk', (c) => {
-	return c.text('edit all blogs route')
-})
-
+app.route('/api/v1/user', userRouter);
+app.route('/api/v1/blog', blogRouter);
 export default app

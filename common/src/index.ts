@@ -2,7 +2,7 @@ import z from 'zod';
 
 // signup schema and type inference
 export const signupInput = z.object({
-  emial: z.string().email(),
+  email: z.string().email(),
   password: z.string().min(6),
   name: z.string().optional()
 })

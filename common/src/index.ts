@@ -11,7 +11,7 @@ export type SignupInput = z.infer<typeof signupInput>
 
 // signin schema and type inference
 export const signinInput = z.object({
-  emial: z.string().email(),
+  email: z.string().email(),
   password: z.string().min(6)
 })
 

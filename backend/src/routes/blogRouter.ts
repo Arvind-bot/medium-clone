@@ -42,7 +42,7 @@ blogRouter.post("/", async (c) => {
       }
     });
     c.status(200);
-    return c.json({ message: "Success created blog post!", blodId: blog?.id || null });
+    return c.json({ message: "Successfully created blog post!", blogId: blog?.id || null });
   } catch (error) {
     console.error(error);
     c.status(500);
@@ -85,7 +85,19 @@ blogRouter.put("/:id", async (c) => {
 blogRouter.get("/b/bulk", async (c) => {
   try {
     const prisma = c.get("prisma");
-    const blogPosts = await prisma.post.findMany();
+    const blogPosts = await prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+      }
+    });
     c.status(200);
     return c.json({ blogPosts });
   } catch (error) {
@@ -103,7 +115,18 @@ blogRouter.get("/:id", async (c) => {
     const blogPost = await prisma.post.findFirst({
       where: {
         id,
-      }
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
+    }
     });
     c.status(200);
     return c.json({ blogPost });

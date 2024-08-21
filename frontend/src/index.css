@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 68%;
+}
+
+@media only screen and (min-width: 56.25em) {
+  html {
+    font-size: 85%;
+  }
+}
+
+@media only screen and (min-width: 75em) {
+  html {
+    font-size: 100%;
+  }
+}
+
 body * {
-  font-family: 'Inter', sans-serif !important;
+  font-family: "Inter", sans-serif !important;
 }

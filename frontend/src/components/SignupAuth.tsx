@@ -22,7 +22,7 @@ export const SignupAuth = () => {
       navigate('/blogs');
     } catch (error) {
       console.error('error', error);
-      alert('Sorry, something went wrong. Please try again later.');
+      alert((error as any)?.response?.data?.message || "Sorry, something went wrong. Please try again later.");
     }
   }
 

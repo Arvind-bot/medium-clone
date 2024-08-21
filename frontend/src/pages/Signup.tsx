@@ -3,7 +3,7 @@ import { SignupAuth } from "../components/SignupAuth";
 
 export const Signup = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 w-screen min-h-dvh">
+    <div className="grid grid-cols-1 md:grid-cols-2 w-screen min-h-dvh max-w-[90rem] mx-auto">
       <div className="py-10">
         <SignupAuth />
       </div>

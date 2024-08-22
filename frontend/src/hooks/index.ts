@@ -32,6 +32,7 @@ export const useBlogs = () => {
       setBlogs(bs || []);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('error', error);
       alert((error as any)?.response?.data?.message || "Sorry, something went wrong. Please try again later.");
     }
@@ -70,4 +71,9 @@ export const useBlog = (blogId: string) => {
   return {
     loading, blog
   }
+}
+
+export const useToken = () => {
+  const token = localStorage?.getItem('token') || null;
+  return token;
 }

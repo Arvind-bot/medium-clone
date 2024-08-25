@@ -9,8 +9,9 @@ export const Signin = () => {
   const token = useToken();
   
   useEffect(() => {
-    if(token) navigate('/blogs'); 
+    if(token) navigate('/blogs');
   },[]);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-screen min-h-dvh max-w-[90rem] mx-auto">
       <div className="py-10">

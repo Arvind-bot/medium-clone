@@ -5,6 +5,7 @@ import { Blog } from "./pages/Blog";
 import { Blogs } from "./pages/Blogs";
 import { CreateBlog } from "./pages/CreateBlog";
 import { Welcome } from "./pages/Welcome";
+import { PrivateRoute } from "./components/PrivateRoute";
 function App() {
   return (
     <>
@@ -12,9 +13,9 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blog/:id" element={<Blog />} />
-          <Route path="/blog/create" element={<CreateBlog />} />
+          <Route path="/blogs" element={<PrivateRoute><Blogs /></PrivateRoute>} />
+          <Route path="/blog/:id" element={<PrivateRoute><Blog /></PrivateRoute>} />
+          <Route path="/blog/create" element={<PrivateRoute><CreateBlog /></PrivateRoute>} />
           <Route path="/" element={<Welcome/>} />
         </Routes>
       </BrowserRouter>

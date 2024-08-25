@@ -4,17 +4,17 @@ import { ButtonDark } from "../components/ButtonDark";
 import { useToken } from "../hooks";
 
 export const Welcome = () => {
-  const token = useToken();
+  const isAuthenticated = useToken();
   const navigate = useNavigate();
   return (
     <div className="h-dvh flex items-center justify-center">
       <div className="flex flex-col items-center">
-        <div className="block text-slate-900 py-2 text-6xl font-extrabold">Welcome to medium!</div>
+        <div className="block text-slate-900 py-2 text-6xl font-extrabold text-center">{`Welcome ${isAuthenticated ? 'back ' : ''}to medium!`}</div>
         <div className="flex gap-2">
-          {token && (
+          {isAuthenticated && (
             <ButtonDark label="View Blogs" onClick={() => navigate("/blogs")} />
           )}
-          {!token && (
+          {!isAuthenticated && (
             <>
               <ButtonBlue size="small" label="Signin" onClick={() => navigate("/signin")} />
               <ButtonDark label="Signup" onClick={() => navigate("/signup")} />

@@ -21,7 +21,7 @@ export const Avatar = ({ name, size = "small", bgColor }: AvatarProps) => {
           : size == "large"
           ? "w-14 h-14"
           : ""
-      } overflow-hidden ${bgColor || 'bg-gray-100'} rounded-full`}
+      } overflow-hidden ${bgColor || 'bg-gray-200'} rounded-full`}
     >
       <span
         className={`${

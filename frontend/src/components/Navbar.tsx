@@ -27,7 +27,7 @@ export const Navbar = () => {
         </Link>
         <Avatar size="large" name={userName} />
         <span onClick={handleLogout} className=" cursor-pointer bg-slate-200 rounded-full w-14 h-14 flex items-center justify-center hover:bg-slate-300">
-          <LogoutIcon className="text-red-500"/>
+          <LogoutIcon className="text-red-500 h-6"/>
         </span>
       </div>
     </div>
